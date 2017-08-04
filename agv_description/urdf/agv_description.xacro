@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<robot name="agv" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:property name="M_PI" value="3.1415926535897931" /> 
+
+<xacro:property name="body_diameter" value="0.75" />
+<xacro:property name="body_thickness" value="0.02" />
+<xacro:property name="body_height" value="0.045" />
+
+<xacro:property name="wheel_diameter" value="0.19" />
+<xacro:property name="wheel_width" value="0.055" />
+<xacro:property name="wheel_base_width" value="0.49" />
+
+<xacro:property name="battery_height" value="0.21" />
+<xacro:property name="battery_width" value="0.165" />
+<xacro:property name="battery_length" value="0.26" />
+
+<material name="blue">
+    <color rgba="0 0 0.8 1"/>
+</material>
+
+<material name="white">
+   <color rgba="1 1 1 1"/>
+</material>
+
+
+<link name="base_link">
+</link>
+
+<link name="body_link">
+    <visual>
+        <geometry>
+            <cylinder radius="${body_diameter/2}" length="${body_thickness}"/>
+        </geometry>
+        <material name="blue"/>
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="${body_diameter/2}" length="${body_thickness}"/>
+        </geometry>
+    </collision>
+</link>
+
+<link name="wheel_link_left">
+    <visual>
+        <geometry>
+            <cylinder radius="${wheel_diameter/2}" length="${wheel_width}"/>
+        </geometry>
+        <material name="white"/>
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="${wheel_diameter/2}" length="${wheel_width}"/>
+        </geometry>
+    </collision>
+</link>
+
+<link name="wheel_link_right">
+    <visual>
+        <geometry>
+            <cylinder radius="${wheel_diameter/2}" length="${wheel_width}"/>
+        </geometry>
+        <material name="white"/>
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder radius="${wheel_diameter/2}" length="${wheel_width}"/>
+        </geometry>
+    </collision>
+</link>
+
+<link name="battery1_link">
+    <visual>
+        <geometry>
+            <box size="${battery_width} ${battery_length} ${battery_height}"/>
+        </geometry>
+        <material name="white"/>
+    </visual>
+    <collision>
+        <geometry>
+            <box size="${battery_width} ${battery_length} ${battery_height}"/>
+        </geometry>
+    </collision>
+</link>
+
+<link name="battery2_link">
+    <visual>
+        <geometry>
+            <box size="${battery_width} ${battery_length} ${battery_height}"/>
+        </geometry>
+        <material name="white"/>
+    </visual>
+    <collision>
+        <geometry>
+            <box size="${battery_width} ${battery_length} ${battery_height}"/>
+        </geometry>
+    </collision>
+</link>
+
+<joint name="base_to_body_link" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin xyz="0 0 ${body_height}"/>
+</joint>
+
+<joint name="base_to_wheel_link_left" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_link_left"/>
+    <axis xyz="1 0 0"/>
+    <origin xyz="${-wheel_base_width/2} 0 ${wheel_diameter/2}" rpy="0 ${M_PI/2} 0"/>
+</joint>
+
+<joint name="base_to_wheel_link_right" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_link_right"/>
+    <axis xyz="1 0 0"/>
+    <origin xyz="${wheel_base_width/2} 0 ${wheel_diameter/2}" rpy="0 ${M_PI/2} 0"/>
+</joint>
+
+<joint name="battery1_joint" type="fixed">
+ <parent link="base_link"/>
+ <child link="battery1_link"/>
+ <origin xyz="0 0.2 ${body_height+battery_height/2}" rpy="0 0 ${M_PI/2}"/>
+</joint>
+
+<joint name="battery2_joint" type="fixed">
+ <parent link="base_link"/>
+ <child link="battery2_link"/>
+ <origin xyz="0 -0.2 ${body_height+battery_height/2}" rpy="0 0 ${M_PI/2}" />
+</joint>
+
+</robot>
+
+
+
