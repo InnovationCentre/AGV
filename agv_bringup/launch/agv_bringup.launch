@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+
+<include file="$(find agv_description)/launch/agv_description.launch"/>
+
+<include file="$(find openni_launch)/launch/openni.launch">
+	<arg name="device_id" value="#2" />
+</include>
+
+ <node pkg="tf" type="static_transform_publisher" name="kinect_base_link" args="0 0.3 0.1 1.57 0 0 /base_link /camera_link 100"/> 
+
+<node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" > 
+  <remap from="image" to="/camera/depth/image_raw"/>
+</node>
+
+<node name="rviz" pkg="rviz" type="rviz" />
+
+</launch>
