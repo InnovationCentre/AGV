@@ -2,7 +2,7 @@
 <launch>
 
 <arg name="teleop" default="true" doc="teleop for controlling robot by keyboard"/>
-<arg name="roboclaw" default="true" doc="control if roboclaw is used"/>
+<arg name="roboclaw" default="false" doc="control if roboclaw is used"/>
 
 <include file="$(find agv_description)/launch/agv_description.launch"/>
 
@@ -10,7 +10,7 @@
 	<arg name="device_id" value="#2" />
 </include>
 
- <node pkg="tf" type="static_transform_publisher" name="kinect_base_link" args="0 0.3 0.1 1.57 0 0 /base_link /camera_link 100"/> 
+ <!--node pkg="tf" type="static_transform_publisher" name="kinect_base_link" args="0 0.3 0.1 1.57 0 0 /base_link /camera_link 100"/--> 
 
 <node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" > 
   <remap from="image" to="/camera/depth/image_raw"/>

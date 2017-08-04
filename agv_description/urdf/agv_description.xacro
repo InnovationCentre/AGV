@@ -23,7 +23,6 @@
    <color rgba="1 1 1 1"/>
 </material>
 
-
 <link name="base_link">
 </link>
 
@@ -128,6 +127,27 @@
  <child link="battery2_link"/>
  <origin xyz="0 -0.2 ${body_height+battery_height/2}" rpy="0 0 ${M_PI/2}" />
 </joint>
+
+<link name="camera_link">
+	<visual>
+       		<origin xyz="0 0 0" rpy="0 0 ${M_PI/2}"/>
+        	<geometry>
+         	<mesh filename="package://agv_description/meshes/sensors/kinect.dae"/>
+        	</geometry>
+      	</visual>
+ 	<collision>
+        	<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  	    	<geometry>
+  	      		<box size="0.07271 0.27794 0.073"/>
+  	    	</geometry>
+  	</collision>
+</link>
+
+<joint name="camera_joint" type="fixed">  
+      <origin xyz=" 0 0.35 0.08" rpy="0 0 ${M_PI/2}"/>
+      <parent link="base_link"/>
+      <child link="camera_link"/>
+</joint>  
 
 </robot>
 
