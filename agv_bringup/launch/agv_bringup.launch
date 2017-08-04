@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <launch>
 
+<arg name="teleop" default="true" doc="teleop for controlling robot by keyboard"/>
+<arg name="roboclaw" default="true" doc="control if roboclaw is used"/>
+
 <include file="$(find agv_description)/launch/agv_description.launch"/>
 
 <include file="$(find openni_launch)/launch/openni.launch">
@@ -14,5 +17,13 @@
 </node>
 
 <node name="rviz" pkg="rviz" type="rviz" />
+
+<group if="$(arg teleop)">
+  <node name="teleop" pkg="turtlebot_teleop" type="turtlebot_teleop_key" output="screen" launch-prefix="xterm -e" />
+</group>
+
+<group if="$(arg roboclaw)">
+  <include file="$(find roboclaw_node)/launch/roboclaw.launch"/>
+</group>
 
 </launch>
